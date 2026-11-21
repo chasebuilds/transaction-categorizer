@@ -1,0 +1,31 @@
+# Rules are checked highest priority first; the first match wins.
+# A rule matches when every condition it lists is true.
+rules:
+  - name: payroll
+    category: Income
+    contains: [payroll]
+    min_amount: 0
+    priority: 10
+  - name: coffee
+    category: Meals
+    contains: [bean barn, kettle corner]
+  - name: groceries
+    category: Groceries
+    contains: [greenleaf market, fresh basket]
+  - name: fuel
+    category: Auto
+    regex: "fuelstop|quickpump"
+  - name: software
+    category: Software
+    contains: [cloudnest, pixelforge]
+  - name: utilities
+    category: Utilities
+    contains: [riverton power, clearwave internet]
+  - name: big-supplies
+    category: Equipment
+    contains: [office depotz]
+    max_amount: -200
+    priority: 5
+  - name: supplies
+    category: Office supplies
+    contains: [office depotz]
