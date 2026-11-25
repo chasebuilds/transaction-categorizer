@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import importlib
+import json
 import shutil
 import sys
 import zipfile
@@ -37,6 +38,11 @@ def build(out: Path = ROOT / "_site") -> Path:
     (out / "samples").mkdir()
     for rel in SAMPLES:
         shutil.copy2(ROOT / rel, out / "samples" / Path(rel).name)
+    if (DEMO / "meta.json").exists():  # title, description and share preview for the page
+        sys.path.insert(0, str(DEMO))
+        page_meta = importlib.import_module("page_meta")
+        meta = json.loads((DEMO / "meta.json").read_text(encoding="utf-8"))
+        page_meta.apply(out, meta, ROOT)
     return out
 
 

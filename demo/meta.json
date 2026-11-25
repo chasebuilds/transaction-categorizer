@@ -1,0 +1,7 @@
+{
+  "title": "Transaction Categorizer: Categorize bank transactions with simple rules | Chase Builds",
+  "description": "Categorize bank and card transactions with an editable YAML rules file, flag possible duplicate charges and build a monthly summary. Runs in your browser.",
+  "url": "https://chasebuilds.github.io/transaction-categorizer/",
+  "image": "docs/demo.png",
+  "repo": "transaction-categorizer"
+}

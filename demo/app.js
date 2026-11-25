@@ -233,10 +233,10 @@ function escapeHtml(s) {
   return String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
 }
 
-document.title = `${D.title} | Live demo`;
 $("#title").textContent = D.title;
 $("#tagline").textContent = D.tagline;
 $("#repo").href = `https://github.com/chasebuilds/${D.repo}`;
+$("#repo-foot").href = `https://github.com/chasebuilds/${D.repo}`;
 $("#sample-note").innerHTML = D.sampleNote;
 buildInputs();
 $("#run-sample").onclick = () => run(true);
