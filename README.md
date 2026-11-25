@@ -2,6 +2,10 @@
 
 [![ci](https://github.com/chasebuilds/transaction-categorizer/actions/workflows/ci.yml/badge.svg)](https://github.com/chasebuilds/transaction-categorizer/actions/workflows/ci.yml) ![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-blue) [![MIT license](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 
+**[Live demo: try it in your browser](https://chasebuilds.github.io/transaction-categorizer/)**. Drop in your own file or run the bundled sample with one click. The real package runs in the page with Pyodide, so files never leave your browser.
+
+[![The live demo after running the sample: the tool's summary, result tabs and output table](docs/demo.png)](https://chasebuilds.github.io/transaction-categorizer/)
+
 Categorizes bank and card transaction exports (CSV or Excel) for bookkeeping using a rules file you can edit in any text editor. It cleans up merchant names (`SQ *BEAN BARN #1043` becomes `Bean Barn`), flags rows no rule matched, flags possible duplicate charges, and writes an Excel report with three sheets: every transaction with its category and the rule that matched, the uncategorized rows, and a monthly summary by category. Everything runs offline.
 
 ## Measured result

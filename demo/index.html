@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Live demo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap">
+<style>
+:root {
+  --wall: #cdb9a3; --wall-2: #e9ddcf; --floor: #b89a80; --glow: #fff6e6; --wood: #6b4a33; --wood-2: #8a6447;
+  --ink: #2a2019; --ink-2: rgba(42, 32, 25, .62); --ink-3: rgba(42, 32, 25, .38);
+  --glass: rgba(255, 250, 244, .22); --glass-edge: rgba(255, 255, 255, .55); --card: rgba(255, 252, 248, .55); --solidcard: rgba(255, 252, 248, .86);
+  --shadow: rgba(70, 40, 20, .22); --me: #e2583a; --good: #1f9a72; --bad: #c8452c; --warn: #a8670f;
+  --solid: #2a2019; --solid-fg: #fbf5ee;
+  --f-ui: "Onest", "Segoe UI", system-ui, sans-serif; --f-num: "Geist Mono", ui-monospace, "Cascadia Mono", monospace;
+  --r-lg: 28px; --r-md: 18px; --r-pill: 999px;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --wall: #2a1f19; --wall-2: #3b2c22; --floor: #241a14; --glow: #ffb867; --wood: #1d140e; --wood-2: #33241a;
+    --ink: #f6ece2; --ink-2: rgba(246, 236, 226, .66); --ink-3: rgba(246, 236, 226, .38);
+    --glass: rgba(34, 24, 18, .34); --glass-edge: rgba(255, 255, 255, .14); --card: rgba(48, 36, 28, .58); --solidcard: rgba(40, 30, 23, .9);
+    --shadow: rgba(0, 0, 0, .45); --me: #ff7a55; --good: #4fd1a1; --bad: #ff8a6a; --warn: #f0b45a;
+    --solid: #f6ece2; --solid-fg: #2a2019; color-scheme: dark;
+  }
+}
+* { box-sizing: border-box }
+body { margin: 0; min-height: 100vh; background: var(--wall); color: var(--ink); font-family: var(--f-ui); font-size: 14px; line-height: 1.5 }
+.room { position: fixed; inset: 0; z-index: -1; overflow: hidden;
+  background: radial-gradient(60% 50% at 78% 18%, var(--glow), transparent 70%), linear-gradient(180deg, var(--wall-2) 0%, var(--wall) 62%, var(--floor) 62.2%, var(--floor) 100%) }
+.room i { position: absolute; display: block }
+.room .panel { left: 0; top: 0; width: 13%; height: 70%; background: repeating-linear-gradient(90deg, var(--wood) 0 18px, var(--wood-2) 18px 22px) }
+.room .shelf { right: 6%; top: 8%; width: 30%; height: 46%; border-radius: 6px; background: linear-gradient(180deg, var(--wood-2), var(--wood)) }
+.room .lamp { left: 26%; top: 18%; width: 180px; height: 180px; border-radius: 50%; background: radial-gradient(circle, var(--glow) 0%, transparent 65%) }
+.glass { background: var(--glass); -webkit-backdrop-filter: blur(26px) saturate(150%); backdrop-filter: blur(26px) saturate(150%);
+  border: 1px solid var(--glass-edge); box-shadow: inset 0 1px 0 var(--glass-edge), 0 24px 60px -20px var(--shadow) }
+.card { background: var(--card); border: 1px solid var(--glass-edge); border-radius: var(--r-md) }
+.wrap { max-width: 1100px; margin: 0 auto; padding: 20px 16px 48px }
+.bar { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 8px 10px 8px 18px; border-radius: var(--r-pill); margin-bottom: 18px }
+.brand { font-weight: 600; font-size: 13px }
+.pill { display: inline-block; padding: 6px 14px; border-radius: var(--r-pill); background: var(--card); border: 1px solid var(--glass-edge); color: var(--ink); text-decoration: none; font-size: 13px }
+.stage { border-radius: var(--r-lg); padding: 24px }
+h1 { margin: 0 0 4px; font-size: 26px; letter-spacing: -.02em }
+.tag { color: var(--ink-2); margin: 0 0 16px }
+.private { display: inline-block; font-size: 12px; padding: 4px 12px; border-radius: var(--r-pill); background: var(--card); border: 1px solid var(--glass-edge); color: var(--good); font-weight: 500 }
+#inputs { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; margin: 18px 0 12px }
+.drop { display: flex; flex-direction: column; gap: 4px; padding: 18px; cursor: pointer; border-style: dashed; min-height: 92px; justify-content: center }
+.drop.over, .drop.has { border-style: solid; border-color: var(--me) }
+.drop-label { font-weight: 600 }
+.drop-file { color: var(--ink-2); font-size: 13px; overflow-wrap: anywhere }
+#options { display: flex; flex-wrap: wrap; gap: 10px 18px; margin: 6px 0 16px }
+.opt { display: flex; align-items: center; gap: 6px; font-size: 13px }
+.opt input[type=text], .opt select { font: inherit; padding: 5px 10px; border-radius: 10px; border: 1px solid var(--glass-edge); background: var(--solidcard); color: var(--ink) }
+.actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center }
+button.run { font: inherit; font-weight: 600; padding: 10px 20px; border-radius: var(--r-pill); border: 1px solid var(--glass-edge); cursor: pointer; background: var(--card); color: var(--ink) }
+button.run.primary { background: var(--solid); color: var(--solid-fg) }
+button.run:disabled { opacity: .45; cursor: wait }
+#status { font-size: 13px; color: var(--ink-2) }
+#status[data-kind=ok] { color: var(--good) } #status[data-kind=bad] { color: var(--bad) } #status[data-kind=busy] { color: var(--warn) }
+.note { color: var(--ink-2); font-size: 13px; margin: 12px 0 0 }
+#results { margin-top: 20px }
+.results-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px; margin-bottom: 10px }
+#download { background: var(--me); color: #fff; border: 0; font-weight: 600 }
+pre#log { font-family: var(--f-num); font-size: 12.5px; padding: 14px; margin: 0 0 14px; white-space: pre-wrap; overflow-wrap: anywhere }
+#tabs { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px }
+.tab { font: inherit; font-size: 13px; padding: 6px 14px; border-radius: var(--r-pill); border: 1px solid var(--glass-edge); background: var(--card); color: var(--ink); cursor: pointer }
+.tab.on { background: var(--solid); color: var(--solid-fg) }
+.tablewrap { overflow: auto; max-height: 520px; background: var(--solidcard) }
+table { border-collapse: collapse; font-size: 12.5px; width: 100% }
+th, td { text-align: left; padding: 6px 10px; border-bottom: 1px solid var(--glass-edge); white-space: nowrap; max-width: 340px; overflow: hidden; text-overflow: ellipsis }
+th { position: sticky; top: 0; background: var(--solidcard); font-weight: 600; z-index: 1 }
+#more, #source { color: var(--ink-3); font-size: 12px; margin: 8px 0 0 }
+footer { text-align: center; color: var(--ink-3); font-size: 12px; margin-top: 22px }
+@media (max-width: 600px) { .stage { padding: 18px } h1 { font-size: 22px } }
+</style>
+</head>
+<body>
+<div class="room" aria-hidden="true"><i class="panel"></i><i class="shelf"></i><i class="lamp"></i></div>
+<div class="wrap">
+  <nav class="bar glass"><span class="brand">Chase Builds</span><a class="pill" id="repo" href="#">Source on GitHub</a></nav>
+  <main class="stage glass">
+    <h1 id="title"></h1>
+    <p class="tag" id="tagline"></p>
+    <span class="private">Your files never leave this browser. Python runs right here in the page; nothing is uploaded.</span>
+    <div id="inputs"></div>
+    <div id="options"></div>
+    <div class="actions">
+      <button class="run primary" id="run-sample" disabled>Try the sample</button>
+      <button class="run" id="run-mine" disabled>Run on my file</button>
+      <span id="status" role="status"></span>
+    </div>
+    <p class="note" id="sample-note"></p>
+    <section id="results" hidden>
+      <div class="results-head"><strong>Result</strong><a class="pill" id="download" hidden>Download</a></div>
+      <pre id="log" class="card"></pre>
+      <div id="tabs"></div>
+      <div class="tablewrap card"><table id="table"></table></div>
+      <p id="more"></p>
+      <p id="source"></p>
+    </section>
+  </main>
+  <footer>Runs the repo's own Python code with Pyodide (Python compiled to WebAssembly). Sample data is synthetic.</footer>
+</div>
+<script src="config.js"></script>
+<script type="module" src="app.js"></script>
+</body>
+</html>
