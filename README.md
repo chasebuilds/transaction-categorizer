@@ -67,3 +67,11 @@ A charge is flagged as a possible duplicate when an earlier charge has the same 
 ## License
 
 MIT, Chase Builds.
+
+## More from Chase Builds
+
+- **[excel-cleaner-pro](https://github.com/chasebuilds/excel-cleaner-pro)**: Cleans messy spreadsheets and logs every change, so nothing disappears quietly. ([live demo](https://chasebuilds.github.io/excel-cleaner-pro/))
+- **[data-merger](https://github.com/chasebuilds/data-merger)**: Combines customer lists with different columns into one record per customer. 0 false merges on 28,512 rows. ([live demo](https://chasebuilds.github.io/data-merger/))
+- **[pdf-to-excel](https://github.com/chasebuilds/pdf-to-excel)**: Invoice PDFs into one Excel sheet, with a confidence score on every field. 3,600 of 3,600 fields correct. ([live demo](https://chasebuilds.github.io/pdf-to-excel/))
+
+[All projects, sorted by industry](https://github.com/chasebuilds) · [chasebuilds.github.io](https://chasebuilds.github.io)
